@@ -153,7 +153,7 @@ do
 		}) :: any
 	) :: { number }
 	do
-		for c = 0, 155 do -- Strings may not be handled correctly when out of range, including null-byte.
+		for c = 0, 255 do -- Strings may not be handled correctly when out of range, including null-byte.
 			table.insert(charset, c)
 		end
 	end
