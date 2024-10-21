@@ -1,11 +1,13 @@
 --!nocheck
 --[[
-    Fuzzer.lua ~ v0.1.1 ----  by RbxStu Contributors -> https://discord.gg/BE6JzuzSB8
+    Fuzzer.lua ~ v0.1.2 ---- by RbxStu Contributors -> https://discord.gg/BE6JzuzSB8
 
     This script fuzzes your entire environment in search of functions which may (or may not!) be vulnerable to memory corruption, UAF, etc-
 
     DISCLAIMER:
-        This script cannot guarantee your executor is "SAFE", this is a development tool meant to test the reliability of ones' environment!
+        This script cannot guarantee your executor is "SAFE", this is a development tool meant to test the reliability of the tools environment!
+		If you crash while performing this test, it is most likely caused due to bad validation code! Contact the developer of your tool to fix this issue!
+
 ]]
 
 local TestData = {
