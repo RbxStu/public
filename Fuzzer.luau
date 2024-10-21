@@ -1,6 +1,6 @@
 --!nocheck
 --[[
-    Fuzzer.lua ~ v0.1.0 ----  by RbxStu Contributors -> https://discord.gg/BE6JzuzSB8
+    Fuzzer.lua ~ v0.1.1 ----  by RbxStu Contributors -> https://discord.gg/BE6JzuzSB8
 
     This script fuzzes your entire environment in search of functions which may (or may not!) be vulnerable to memory corruption, UAF, etc-
 
@@ -285,48 +285,16 @@ local function traverse_table(tableObject: { any })
 	end
 end
 
-local gcClosures = 0
+task.wait(5)
 
-for _, gcobj in getgc(true) do
-	if typeof(gcobj) ~= "function" then
-		continue
-	end
-
-	if typeof(gcobj) == "table" then
-		traverse_table(gcobj)
-		continue
-	end
-
-	gcClosures += 1
-	table.insert(foundClosures, gcobj)
-end
-
-local regClosures = 0
-
-for _, regobj in getreg() do
-	if typeof(regobj) ~= "function" then
-		continue
-	end
-
-	if typeof(regobj) == "table" then
-		traverse_table(regobj)
-		continue
-	end
-
-	regClosures += 1
-	table.insert(foundClosures, regobj)
-end
+local factor = 0.11 -- We may take (Inevitably) more than 5 seconds per task, i.e: PC limitation.
 
 print(
 	"Found "
 		.. #foundClosures
-		.. " functions to fuzz, (FromReg: "
-		.. regClosures
-		.. ", FromGC: "
-		.. gcClosures
-		.. ", FromMixed: "
-		.. tableClosures
-		.. ")"
+		.. " functions to fuzz; Fuzzing beginning in 5 seconds; Fuzzing will take approximately "
+		.. #foundClosures * factor
+		.. " seconds to complete!"
 )
 
 for _, closure in foundClosures do
@@ -345,5 +313,5 @@ for _, closure in foundClosures do
 			.. " failures"
 	)
 
-	print("Arguments will not be dumped (not implemented)")
+	task.wait(1)
 end
